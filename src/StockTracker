@@ -1,0 +1,48 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class StockTracker {
+    public static void main(String[] args) {
+        // Key: Stock Symbol (String), Value: Price (Double)
+        HashMap<String, Double> stockMarket = new HashMap<>();
+
+        // Initial Market Data
+        stockMarket.put("AAPL", 175.50);
+        stockMarket.put("TSLA", 240.25);
+        stockMarket.put("RELIANCE", 2500.00);
+        stockMarket.put("GOOGL", 140.10);
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("--- 📈 Real-time Stock Tracker ---");
+
+        while (true) {
+            System.out.println("\n1. Check Price");
+            System.out.println("2. Update Price");
+            System.out.println("3. Exit");
+            System.out.print("Choice: ");
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+            if (choice == 1) {
+                System.out.print("Enter Symbol: ");
+                String symbol = sc.nextLine().toUpperCase();
+                if (stockMarket.containsKey(symbol)) {
+                    System.out.println("💰 Current Price of " + symbol + ": $" + stockMarket.get(symbol));
+                } else {
+                    System.out.println("❌ Symbol not found.");
+                }
+            } else if (choice == 2) {
+                System.out.print("Enter Symbol to update: ");
+                String symbol = sc.nextLine().toUpperCase();
+                System.out.print("Enter New Price: ");
+                double newPrice = sc.nextDouble();
+
+                stockMarket.put(symbol, newPrice); // Overwrites old value
+                System.out.println("✅ Price updated for " + symbol);
+            } else if (choice == 3) {
+                break;
+            }
+        }
+        sc.close();
+    }
+}
