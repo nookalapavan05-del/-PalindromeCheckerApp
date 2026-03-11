@@ -3,7 +3,7 @@ import java.util.Scanner;
 /**
  * MAIN CLASS: PalindromeCheckerApp
  * UC13: Performance Benchmarking and Robust Validation
- */
+ */// Verified Clone
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
