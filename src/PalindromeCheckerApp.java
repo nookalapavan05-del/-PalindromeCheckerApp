@@ -1,10 +1,9 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 /**
  * MAIN CLASS: PalindromeCheckerApp
- * UC7: Optimized Deque-Based Validation
+ * UC8: LinkedList-Based Symmetric Validation
  */
 public class PalindromeCheckerApp {
 
@@ -12,32 +11,32 @@ public class PalindromeCheckerApp {
         // --- UC1: Welcome Message ---
         System.out.println("====================================================");
         System.out.println("Welcome to the Palindrome Checker Management System");
-        System.out.println("Version: 7.0 (Deque Optimization)");
+        System.out.println("Version: 8.0 (LinkedList Implementation)");
         System.out.println("====================================================");
 
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter a string to check: ");
         String input = scanner.nextLine();
 
-        // --- UC7 Logic: ArrayDeque ---
-        Deque<Character> deque = new ArrayDeque<>();
+        // --- UC8 Logic: LinkedList ---
+        LinkedList<Character> list = new LinkedList<>();
 
-        // Add each character to the end of the deque
+        // Add each character to the list
         for (char c : input.toCharArray()) {
-            deque.addLast(c);
+            list.add(c);
         }
 
         boolean isPalindrome = true;
 
-        // Compare by removing from both ends simultaneously
-        while (deque.size() > 1) {
-            if (deque.removeFirst() != deque.removeLast()) {
+        // Symmetric validation by removing from both ends
+        while (list.size() > 1) {
+            if (list.removeFirst() != list.removeLast()) {
                 isPalindrome = false;
                 break;
             }
         }
 
-        System.out.println("Input: " + input);
+        System.out.println("Input word: " + input);
         System.out.println("Is Palindrome?: " + isPalindrome);
         System.out.println("----------------------------------------------------");
 
