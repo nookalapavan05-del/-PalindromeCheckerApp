@@ -1,0 +1,48 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+// A simple class to store multiple data points for one key
+class Employee {
+    String name;
+    String department;
+
+    Employee(String name, String department) {
+        this.name = name;
+        this.department = department;
+    }
+
+    @Override
+    public String toString() {
+        return "Name: " + name + " | Dept: " + department;
+    }
+}
+
+public class EmployeeDirectory {
+    public static void main(String[] args) {
+        // Key: Employee ID (Integer), Value: Employee Object
+        HashMap<Integer, Employee> directory = new HashMap<>();
+
+        // Adding sample employees
+        directory.put(101, new Employee("Pavan", "AI & ML"));
+        directory.put(102, new Employee("Anjali", "Data Science"));
+        directory.put(103, new Employee("Rahul", "Cybersecurity"));
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("--- 🏢 Corporate Employee Directory ---");
+
+        while (true) {
+            System.out.print("\nEnter Employee ID to lookup (or 0 to exit): ");
+            int id = sc.nextInt();
+
+            if (id == 0) break;
+
+            // O(1) Instant lookup of the entire object
+            if (directory.containsKey(id)) {
+                System.out.println("✅ Result Found -> " + directory.get(id));
+            } else {
+                System.out.println("❌ Error: Employee ID not found.");
+            }
+        }
+        sc.close();
+    }
+}
