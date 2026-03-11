@@ -1,8 +1,9 @@
 import java.util.Scanner;
+import java.util.Stack;
 
 /**
  * MAIN CLASS: PalindromeCheckerApp
- * UC4: Two-Pointer Validation using Character Array
+ * UC5: Stack-Based Validation (LIFO Principle)
  */
 public class PalindromeCheckerApp {
 
@@ -10,30 +11,33 @@ public class PalindromeCheckerApp {
         // --- UC1: Welcome Message ---
         System.out.println("====================================================");
         System.out.println("Welcome to the Palindrome Checker Management System");
-        System.out.println("Version: 4.0 (Two-Pointer Logic)");
+        System.out.println("Version: 5.0 (Stack Data Structure)");
         System.out.println("====================================================");
 
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter a string to check: ");
         String input = scanner.nextLine();
 
-        // --- UC4 Logic: Character Array & Two-Pointer ---
-        char[] chars = input.toCharArray();
-        int start = 0;
-        int end = chars.length - 1;
+        // --- UC5 Logic: Using Stack ---
+        Stack<Character> stack = new Stack<>();
+
+        // 1. Push all characters into the stack
+        for (char c : input.toCharArray()) {
+            stack.push(c);
+        }
+
         boolean isPalindrome = true;
 
-        // Continue comparison until pointers cross in the middle
-        while (start < end) {
-            if (chars[start] != chars[end]) {
+        // 2. Compare original characters with popped characters (Reverse Order)
+        for (char c : input.toCharArray()) {
+            if (c != stack.pop()) {
                 isPalindrome = false;
                 break;
             }
-            start++;
-            end--;
         }
 
-        System.out.println("Input: " + input);
+        // 3. Display Result
+        System.out.println("Input text: " + input);
         System.out.println("Is Palindrome?: " + isPalindrome);
         System.out.println("----------------------------------------------------");
 
