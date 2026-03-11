@@ -2,9 +2,7 @@ import java.util.Scanner;
 
 /**
  * MAIN CLASS: PalindromeCheckerApp
- * UC1: Welcome Message
- * UC2: Two-Pointer Validation (Optimized)
- * UC3: Transformation-Based Validation (Reversing)
+ * UC4: Two-Pointer Validation using Character Array
  */
 public class PalindromeCheckerApp {
 
@@ -12,33 +10,33 @@ public class PalindromeCheckerApp {
         // --- UC1: Welcome Message ---
         System.out.println("====================================================");
         System.out.println("Welcome to the Palindrome Checker Management System");
-        System.out.println("Version: 3.0 (Transformation Logic)");
+        System.out.println("Version: 4.0 (Two-Pointer Logic)");
         System.out.println("====================================================");
 
-        // --- UC3: Reverse String Based Palindrome Check ---
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter a string to check: ");
         String input = scanner.nextLine();
 
-        String reversed = "";
+        // --- UC4 Logic: Character Array & Two-Pointer ---
+        char[] chars = input.toCharArray();
+        int start = 0;
+        int end = chars.length - 1;
+        boolean isPalindrome = true;
 
-        // Transformation: Iterate from the last character to the first.
-        //
-        for (int i = input.length() - 1; i >= 0; i--) {
-            reversed += input.charAt(i);
+        // Continue comparison until pointers cross in the middle
+        while (start < end) {
+            if (chars[start] != chars[end]) {
+                isPalindrome = false;
+                break;
+            }
+            start++;
+            end--;
         }
 
-        System.out.println("Original: " + input);
-        System.out.println("Reversed: " + reversed);
-
-        // Validation: Comparing original and reversed strings
-        if (input.equals(reversed)) {
-            System.out.println("Result: The string is a palindrome.");
-        } else {
-            System.out.println("Result: The string is NOT a palindrome.");
-        }
-
+        System.out.println("Input: " + input);
+        System.out.println("Is Palindrome?: " + isPalindrome);
         System.out.println("----------------------------------------------------");
+
         scanner.close();
     }
 }
