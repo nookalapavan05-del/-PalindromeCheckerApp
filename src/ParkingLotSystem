@@ -1,0 +1,51 @@
+import java.util.Scanner;
+
+public class ParkingLotSystem {
+    public static void main(String[] args) {
+        // Fixed size parking lot
+        String[] spots = new String[10];
+        int size = spots.length;
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("--- 🚗 Smart Parking (Linear Probing) ---");
+
+        while (true) {
+            System.out.println("\n1. Park Car | 2. View Lot | 3. Exit");
+            System.out.print("Choice: ");
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+            if (choice == 1) {
+                System.out.print("Enter License Plate: ");
+                String plate = sc.nextLine();
+
+                // Simple Hash Function: (Sum of char values) % size
+                int hashIndex = Math.abs(plate.hashCode()) % size;
+                int originalIndex = hashIndex;
+                boolean parked = false;
+
+                // Linear Probing Logic
+                while (spots[hashIndex] != null) {
+                    System.out.println("⚠️ Spot " + hashIndex + " occupied. Probing next...");
+                    hashIndex = (hashIndex + 1) % size; // Move to next spot
+
+                    if (hashIndex == originalIndex) {
+                        System.out.println("❌ Error: Parking Lot is FULL!");
+                        break;
+                    }
+                }
+
+                if (spots[hashIndex] == null) {
+                    spots[hashIndex] = plate;
+                    System.out.println("✅ Car parked in Spot " + hashIndex);
+                }
+            } else if (choice == 2) {
+                System.out.println("\n--- Current Parking Map ---");
+                for (int i = 0; i < size; i++) {
+                    System.out.println("Spot " + i + ": " + (spots[i] == null ? "[Empty]" : spots[i]));
+                }
+            } else if (choice == 3) break;
+        }
+        sc.close();
+    }
+}
