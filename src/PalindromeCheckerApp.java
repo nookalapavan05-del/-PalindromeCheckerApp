@@ -1,58 +1,79 @@
+import java.util.*;
+
 /**
- * MAIN CLASS - UseCase11PalindromeCheckerApp
- * ==========================================
- * Use Case 11: Object-Oriented Palindrome Service
- * * Description:
- * This class demonstrates palindrome validation using an object-oriented design.
- * The logic is encapsulated within a PalindromeService class. [cite: 5]
+ * UC12: Strategy Design Pattern Implementation
+ * Enables switching between different data structures at runtime.
  */
-public class UseCase11PalindromeCheckerApp {
 
-    /**
-     * Application entry point for UC11.
-     * @param args Command line arguments
-     */
-    public static void main(String[] args) {
-        // Create an instance of the service class
-        PalindromeService service = new PalindromeService();
+// 1. Define the Contract
+interface PalindromeStrategy {
+    boolean check(String input);
+}
 
-        // Example Input: racecar
-        String input = "racecar";
-
-        System.out.println("Input: " + input);
-
-        // Use the encapsulated method to check the string
-        boolean result = service.checkPalindrome(input);
-
-        System.out.println("Is Palindrome?");
-        System.out.println(result); [cite: 6, 7]
+// 2. Concrete Strategy: Stack (LIFO)
+class StackStrategy implements PalindromeStrategy {
+    @Override
+    public boolean check(String input) {
+        if (input == null) return false;
+        String clean = input.toLowerCase();
+        Stack<Character> stack = new Stack<>();
+        for (char c : clean.toCharArray()) stack.push(c);
+        for (char c : clean.toCharArray()) {
+            if (c != stack.pop()) return false;
+        }
+        return true;
     }
 }
 
-/**
- * Service class that contains palindrome logic. [cite: 5]
- */
-class PalindromeService {
-
-    /**
-     * Checks whether the input string is a palindrome. [cite: 5]
-     * Uses a two-pointer approach (start and end). [cite: 5]
-     * * @param input Input string
-     * @return true if palindrome, false otherwise
-     */
-    public boolean checkPalindrome(String input) {
-        // Initialize pointers [cite: 5]
-        int start = 0;
-        int end = input.length() - 1;
-
-        // Logic to compare characters from both ends [cite: 5]
-        while (start < end) {
-            if (input.charAt(start) != input.charAt(end)) {
-                return false;
-            }
-            start++;
-            end--;
+// 3. Concrete Strategy: Deque (Double-Ended)
+class DequeStrategy implements PalindromeStrategy {
+    @Override
+    public boolean check(String input) {
+        if (input == null || input.isEmpty()) return true;
+        String clean = input.toLowerCase();
+        Deque<Character> deque = new ArrayDeque<>();
+        for (char c : clean.toCharArray()) deque.addLast(c);
+        while (deque.size() > 1) {
+            if (deque.removeFirst() != deque.removeLast()) return false;
         }
         return true;
+    }
+}
+
+// 4. Main Context Class
+public class PalindromeCheckerApp {
+    private PalindromeStrategy strategy;
+
+    public void setStrategy(PalindromeStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public void runValidation(String text) {
+        if (strategy == null) {
+            System.out.println("Error: No strategy selected!");
+            return;
+        }
+        boolean result = strategy.check(text);
+        System.out.println("Strategy: " + strategy.getClass().getSimpleName());
+        System.out.println("Input: " + text + " | Is Palindrome: " + result);
+    }
+
+    public static void main(String[] args) {
+        System.out.println("====================================================");
+        System.out.println("Welcome to the Palindrome Checker Management System");
+        System.out.println("Version: 12.0 (Design Pattern Implementation)");
+        System.out.println("====================================================");
+
+        PalindromeCheckerApp app = new PalindromeCheckerApp();
+        String testWord = "Racecar";
+
+        // Runtime selection of algorithm
+        app.setStrategy(new StackStrategy());
+        app.runValidation(testWord);
+
+        System.out.println("----------------------------------------------------");
+
+        app.setStrategy(new DequeStrategy());
+        app.runValidation(testWord);
     }
 }
