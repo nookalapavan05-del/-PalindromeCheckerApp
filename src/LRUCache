@@ -1,0 +1,43 @@
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public class LRUCache extends LinkedHashMap<String, String> {
+    private final int CAPACITY;
+
+    public LRUCache(int capacity) {
+        // 'true' tells the map to order by ACCESS (most recent at the end)
+        super(capacity, 0.75f, true);
+        this.CAPACITY = capacity;
+    }
+
+    // This method tells the map when to delete the oldest item
+    @Override
+    protected boolean removeEldestEntry(Map.Entry<String, String> eldest) {
+        return size() > CAPACITY;
+    }
+
+    public static void main(String[] args) {
+        // Cache size of 3 (Like 3 open tabs)
+        LRUCache browserHistory = new LRUCache(3);
+
+        System.out.println("--- 🌐 LRU Browser History Cache ---");
+
+        browserHistory.put("google.com", "Search Engine");
+        browserHistory.put("github.com", "Coding Platform");
+        browserHistory.put("srmist.edu.in", "University Portal");
+
+        System.out.println("History: " + browserHistory.keySet());
+
+        // Visit a new page - "google.com" is now the Least Recently Used
+        System.out.println("\nVisiting: chat.google.com...");
+        browserHistory.put("chat.google.com", "AI Chat");
+
+        // "google.com" should be automatically deleted because it was the oldest
+        System.out.println("Updated History (google.com removed): " + browserHistory.keySet());
+
+        // Re-accessing an old page moves it to "Most Recent"
+        System.out.println("\nRe-accessing: github.com...");
+        browserHistory.get("github.com");
+        System.out.println("Current Order (github is now most recent): " + browserHistory.keySet());
+    }
+}
