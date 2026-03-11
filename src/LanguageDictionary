@@ -1,0 +1,41 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class LanguageDictionary {
+    public static void main(String[] args) {
+        // Key: English Word, Value: Local Language Translation
+        HashMap<String, String> dictionary = new HashMap<>();
+
+        // Adding translations (English -> Telugu/Tamil)
+        dictionary.put("hello", "Namaskaram (Telugu/Tamil)");
+        dictionary.put("water", "Neeru (Telugu) / Thanni (Tamil)");
+        dictionary.put("food", "Annam (Telugu) / Saapadu (Tamil)");
+        dictionary.put("thank you", "Dhanyavadalu (Telugu) / Nandri (Tamil)");
+        dictionary.put("friend", "Snehitudu (Telugu) / Nanban (Tamil)");
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("--- 📖 Multilingual Dictionary ---");
+
+        while (true) {
+            System.out.print("\nEnter English word to translate (or 'exit'): ");
+            String word = sc.nextLine().toLowerCase().trim();
+
+            if (word.equals("exit")) break;
+
+            // Instant lookup
+            if (dictionary.containsKey(word)) {
+                System.out.println("Translation: " + dictionary.get(word));
+            } else {
+                System.out.println("❌ Word not found in dictionary.");
+                System.out.print("Would you like to add it? (yes/no): ");
+                if(sc.nextLine().equalsIgnoreCase("yes")) {
+                    System.out.print("Enter translation: ");
+                    String trans = sc.nextLine();
+                    dictionary.put(word, trans);
+                    System.out.println("✅ Dictionary updated!");
+                }
+            }
+        }
+        sc.close();
+    }
+}

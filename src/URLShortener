@@ -1,0 +1,46 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class URLShortener {
+    public static void main(String[] args) {
+        // Key: Short Code, Value: Original Long URL
+        HashMap<String, String> urlMap = new HashMap<>();
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("--- 🔗 URL Shortener System ---");
+
+        while (true) {
+            System.out.println("\n1. Shorten a URL");
+            System.out.println("2. Expand a Short Code");
+            System.out.println("3. Exit");
+            System.out.print("Choose an option: ");
+
+            int choice = sc.nextInt();
+            sc.nextLine(); // consume newline
+
+            if (choice == 1) {
+                System.out.print("Enter Long URL: ");
+                String longUrl = sc.nextLine();
+
+                // Logic: Create a unique short code (Using hash of the string)
+                String shortCode = Integer.toHexString(longUrl.hashCode());
+                urlMap.put(shortCode, longUrl);
+
+                System.out.println("✅ Shortened URL: srm.it/" + shortCode);
+
+            } else if (choice == 2) {
+                System.out.print("Enter Short Code (e.g., f52a1): ");
+                String code = sc.nextLine();
+
+                if (urlMap.containsKey(code)) {
+                    System.out.println("🔗 Redirecting to: " + urlMap.get(code));
+                } else {
+                    System.out.println("❌ Error: Invalid Code!");
+                }
+            } else if (choice == 3) {
+                break;
+            }
+        }
+        sc.close();
+    }
+}
