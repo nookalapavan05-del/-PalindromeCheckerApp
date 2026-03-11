@@ -1,0 +1,29 @@
+import java.util.HashSet;
+import java.util.Scanner;
+
+public class DuplicateFinder {
+    public static void main(String[] args) {
+        // A HashSet stores unique elements only.
+        // add() returns false if the item already exists.
+        HashSet<String> uniqueRecords = new HashSet<>();
+
+        String[] transactionData = {
+            "TXN101", "TXN102", "TXN101", "TXN103",
+            "TXN104", "TXN102", "TXN105", "TXN101"
+        };
+
+        System.out.println("--- 🔎 Duplicate Transaction Detector ---");
+        System.out.println("Scanning data stream...");
+
+        for (String txn : transactionData) {
+            if (!uniqueRecords.add(txn)) {
+                System.out.println("🚨 ALERT: Duplicate found and ignored -> " + txn);
+            } else {
+                System.out.println("✅ Clean Record: " + txn);
+            }
+        }
+
+        System.out.println("\nFinal Unique Record Count: " + uniqueRecords.size());
+        System.out.println("Cleaned Dataset: " + uniqueRecords);
+    }
+}
