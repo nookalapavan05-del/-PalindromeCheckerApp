@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 /**
  * MAIN CLASS: PalindromeCheckerApp
- * UC9: Recursive Palindrome Validation
+ * UC10: Normalization and Robust Validation
  */
 public class PalindromeCheckerApp {
 
@@ -10,38 +10,33 @@ public class PalindromeCheckerApp {
         // --- UC1: Welcome Message ---
         System.out.println("====================================================");
         System.out.println("Welcome to the Palindrome Checker Management System");
-        System.out.println("Version: 9.0 (Recursive Implementation)");
+        System.out.println("Version: 10.0 (Robust Normalization)");
         System.out.println("====================================================");
 
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter a string to check: ");
-        String input = scanner.nextLine();
+        System.out.print("Input: ");
+        String rawInput = scanner.nextLine();
 
-        // --- UC9 Logic: Recursion ---
-        boolean isPalindrome = check(input, 0, input.length() - 1);
+        // --- UC10 Logic: Normalization using Regular Expressions ---
+        // [^a-zA-Z0-9] matches anything that is NOT a letter or a number
+        String normalized = rawInput.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
-        System.out.println("Input: " + input);
+        boolean isPalindrome = true;
+        int length = normalized.length();
+
+        // Optimized comparison logic
+        for (int i = 0; i < length / 2; i++) {
+            if (normalized.charAt(i) != normalized.charAt(length - 1 - i)) {
+                isPalindrome = false;
+                break;
+            }
+        }
+
+        System.out.println("Raw Input: " + rawInput);
+        System.out.println("Normalized: " + normalized);
         System.out.println("Is Palindrome?: " + isPalindrome);
         System.out.println("----------------------------------------------------");
 
         scanner.close();
-    }
-
-    /**
-     * Recursive helper method
-     */
-    private static boolean check(String s, int start, int end) {
-        // Base Condition: Single char or empty range is always a palindrome
-        if (start >= end) {
-            return true;
-        }
-
-        // Logical Comparison
-        if (s.charAt(start) != s.charAt(end)) {
-            return false;
-        }
-
-        // Recursive Step: shrink the problem
-        return check(s, start + 1, end - 1);
     }
 }
