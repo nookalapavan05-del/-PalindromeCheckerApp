@@ -1,0 +1,32 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class RateLimiter {
+    public static void main(String[] args) {
+        // Key: UserID, Value: Request Count
+        HashMap<String, Integer> requestLog = new HashMap<>();
+        final int MAX_REQUESTS = 3;
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("--- 🛡️ API Gateway: Rate Limiter ---");
+
+        while (true) {
+            System.out.print("\nEnter User ID to access API (or 'exit'): ");
+            String userId = sc.nextLine();
+
+            if (userId.equalsIgnoreCase("exit")) break;
+
+            // Get current count or 0 if it's their first time
+            int count = requestLog.getOrDefault(userId, 0);
+
+            if (count < MAX_REQUESTS) {
+                count++;
+                requestLog.put(userId, count);
+                System.out.println("✅ Access Granted. Request " + count + "/" + MAX_REQUESTS);
+            } else {
+                System.out.println("❌ 429 Too Many Requests: User " + userId + " is rate-limited!");
+            }
+        }
+        sc.close();
+    }
+}
