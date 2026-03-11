@@ -1,0 +1,32 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class UsernameChecker {
+    public static void main(String[] args) {
+        // Use a HashMap for O(1) average time complexity search
+        HashMap<String, Integer> registeredUsers = new HashMap<>();
+
+        // Pre-loading some existing data
+        registeredUsers.put("pavan_05", 101);
+        registeredUsers.put("srm_student", 102);
+        registeredUsers.put("aiml_dev", 103);
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("--- Social Media Username Availability Checker ---");
+        System.out.print("Enter username to check: ");
+        String input = scanner.nextLine().toLowerCase();
+
+        // Problem Requirement: O(1) search using Hash Table
+        if (registeredUsers.containsKey(input)) {
+            System.out.println("❌ Status: Taken");
+            // Suggesting an alternative
+            String suggestion = input + "_refreshed";
+            System.out.println("💡 Try this instead: " + suggestion);
+        } else {
+            System.out.println("✅ Status: Available!");
+            System.out.println("You can register as '" + input + "'.");
+        }
+
+        scanner.close();
+    }
+}
