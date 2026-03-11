@@ -1,0 +1,42 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class FlashSaleManager {
+    public static void main(String[] args) {
+        // Key: Item Name, Value: Stock Count
+        HashMap<String, Integer> inventory = new HashMap<>();
+
+        // Pre-loading stock for the flash sale
+        inventory.put("iPhone15", 5);
+        inventory.put("GamingLaptop", 2);
+        inventory.put("AirPodsPro", 10);
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("--- ⚡ LIVE FLASH SALE ⚡ ---");
+
+        while (true) {
+            System.out.print("\nEnter item to buy (or 'exit'): ");
+            String item = sc.nextLine();
+
+            if (item.equalsIgnoreCase("exit")) break;
+
+            // O(1) Check: Does the item exist?
+            if (inventory.containsKey(item)) {
+                int stock = inventory.get(item);
+
+                if (stock > 0) {
+                    // Update Stock: Decrease by 1
+                    inventory.put(item, stock - 1);
+                    System.out.println("✅ Success! You bought " + item);
+                    System.out.println("Items remaining: " + (stock - 1));
+                } else {
+                    System.out.println("❌ SOLD OUT: " + item + " is gone!");
+                }
+            } else {
+                System.out.println("❓ Error: Item not in sale list.");
+            }
+        }
+        sc.close();
+        System.out.println("Sale session ended.");
+    }
+}
