@@ -1,11 +1,10 @@
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Scanner;
-import java.util.Stack;
 
 /**
  * MAIN CLASS: PalindromeCheckerApp
- * UC6: Combined Queue (FIFO) and Stack (LIFO) Validation
+ * UC7: Optimized Deque-Based Validation
  */
 public class PalindromeCheckerApp {
 
@@ -13,35 +12,32 @@ public class PalindromeCheckerApp {
         // --- UC1: Welcome Message ---
         System.out.println("====================================================");
         System.out.println("Welcome to the Palindrome Checker Management System");
-        System.out.println("Version: 6.0 (Queue & Stack Integration)");
+        System.out.println("Version: 7.0 (Deque Optimization)");
         System.out.println("====================================================");
 
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter a string to check: ");
         String input = scanner.nextLine();
 
-        // --- UC6 Logic: Queue and Stack ---
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stack = new Stack<>();
+        // --- UC7 Logic: ArrayDeque ---
+        Deque<Character> deque = new ArrayDeque<>();
 
-        // Add characters to both structures
+        // Add each character to the end of the deque
         for (char c : input.toCharArray()) {
-            queue.add(c);  // FIFO
-            stack.push(c); // LIFO
+            deque.addLast(c);
         }
 
         boolean isPalindrome = true;
 
-        // Compare until queue is empty
-        while (!queue.isEmpty()) {
-            // poll() gets first char, pop() gets last char
-            if (queue.poll() != stack.pop()) {
+        // Compare by removing from both ends simultaneously
+        while (deque.size() > 1) {
+            if (deque.removeFirst() != deque.removeLast()) {
                 isPalindrome = false;
                 break;
             }
         }
 
-        System.out.println("Input word: " + input);
+        System.out.println("Input: " + input);
         System.out.println("Is Palindrome?: " + isPalindrome);
         System.out.println("----------------------------------------------------");
 
